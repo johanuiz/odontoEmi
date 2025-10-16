@@ -1,9 +1,1063 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL was not found on this server.</p>
-<p>Additionally, a 404 Not Found
-error was encountered while trying to use an ErrorDocument to handle the request.</p>
-</body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historias Clínicas - OdontoEMI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Top Header */
+        .top-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            color: #667eea;
+        }
+
+        .system-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            color: #4a5568;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #718096;
+        }
+
+        .logout-btn {
+            padding: 6px 12px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Navigation */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-menu li a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu li a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #667eea;
+        }
+
+        .header-actions-btn {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Histories Grid */
+        .histories-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .history-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .history-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f7fafc;
+        }
+
+        .history-patient {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .patient-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .patient-info h3 {
+            font-size: 18px;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .patient-info p {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .history-date {
+            text-align: right;
+        }
+
+        .date-label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .date-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .history-content {
+            margin-bottom: 15px;
+        }
+
+        .content-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .content-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .content-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .content-value {
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .diagnosis-section {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .diagnosis-section h4 {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .diagnosis-section p {
+            font-size: 13px;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #2563eb;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 2px solid #f7fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 2px solid #f7fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="logo-section">
+            <div class="logo">🦷</div>
+            <div class="system-title">OdontoEMI</div>
+        </div>
+        <div class="header-actions">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">Dr</div>
+                <div class="user-details">
+                    <div class="user-name">Dr. Odontólogo</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+                <button class="logout-btn" onclick="handleRoute('/index.html')">Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <ul class="nav-menu">
+            <li><a href="/index.html"><i class="fas fa-home"></i> Panel</a></li>
+            <li><a href="/panel-control/agenda_original"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+            <li><a href="/panel-control/pacientes"><i class="fas fa-users"></i> Pacientes</a></li>
+            <li><a href="/panel-control/historias" class="active"><i class="fas fa-file-medical"></i> Historias</a></li>
+            <li><a href="/panel-control/facturacion"><i class="fas fa-file-invoice-dollar"></i> Facturación</a></li>
+            <li><a href="/panel-control/inventario"><i class="fas fa-boxes"></i> Inventario</a></li>
+            <li><a href="/panel-control/examenes"><i class="fas fa-flask"></i> Exámenes</a></li>
+            <li><a href="/panel-control/reportes"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-file-medical"></i>
+                Historias Clínicas
+            </h1>
+            <div class="header-actions-btn">
+                <button class="btn btn-primary" onclick="showAddHistoryModal()">
+                    <i class="fas fa-plus"></i> Nueva Historia
+                </button>
+                <button class="btn btn-success" onclick="loadHistories()">
+                    <i class="fas fa-sync"></i> Actualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Buscar Paciente</label>
+                    <input type="text" id="searchPatient" placeholder="Nombre del paciente..." onkeyup="filterHistories()">
+                </div>
+                <div class="filter-group">
+                    <label>Fecha Desde</label>
+                    <input type="date" id="dateFrom" onchange="filterHistories()">
+                </div>
+                <div class="filter-group">
+                    <label>Fecha Hasta</label>
+                    <input type="date" id="dateTo" onchange="filterHistories()">
+                </div>
+                <div class="filter-group">
+                    <label>Tipo de Tratamiento</label>
+                    <select id="treatmentFilter" onchange="filterHistories()">
+                        <option value="">Todos</option>
+                        <option value="consulta">Consulta</option>
+                        <option value="limpieza">Limpieza</option>
+                        <option value="ortodoncia">Ortodoncia</option>
+                        <option value="endodoncia">Endodoncia</option>
+                        <option value="cirugia">Cirugía</option>
+                        <option value="estetica">Estética</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Histories List -->
+        <div id="historiesContainer" class="histories-grid">
+            <!-- Histories will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Add/Edit History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nueva Historia Clínica</h2>
+                <button class="close-btn" onclick="closeHistoryModal()">×</button>
+            </div>
+            <form id="historyForm">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Paciente *</label>
+                            <select id="patientSelect" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Consulta *</label>
+                            <input type="date" id="consultDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Tratamiento *</label>
+                            <select id="treatmentType" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="consulta">Consulta General</option>
+                                <option value="limpieza">Limpieza Dental</option>
+                                <option value="ortodoncia">Ortodoncia</option>
+                                <option value="endodoncia">Endodoncia</option>
+                                <option value="cirugia">Cirugía</option>
+                                <option value="estetica">Estética Dental</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Diente/Pieza</label>
+                            <input type="text" id="toothNumber" placeholder="Ej: 16, 21, 36...">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Motivo de Consulta *</label>
+                            <textarea id="reasonVisit" required placeholder="Describa el motivo de la consulta..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Diagnóstico *</label>
+                            <textarea id="diagnosis" required placeholder="Diagnóstico detallado..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Tratamiento Realizado *</label>
+                            <textarea id="treatment" required placeholder="Describa el tratamiento realizado..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Observaciones</label>
+                            <textarea id="observations" placeholder="Observaciones adicionales..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Próxima Cita</label>
+                            <input type="date" id="nextAppointment">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeHistoryModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Historia
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let histories = [];
+        let patients = [];
+
+        // Initialize
+        window.onload = function() {
+            loadPatients();
+            loadHistories();
+            setDefaultDate();
+        };
+
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('consultDate').value = today;
+        }
+
+        // Load patients
+        async function loadPatients() {
+            try {
+                const response = await fetch('http://localhost:5001/api/patients');
+                if (response.ok) {
+                    patients = await response.json();
+                    populatePatientSelect();
+                }
+            } catch (error) {
+                console.error('Error al cargar pacientes:', error);
+            }
+        }
+
+        function populatePatientSelect() {
+            const select = document.getElementById('patientSelect');
+            select.innerHTML = '<option value="">Seleccionar paciente...</option>';
+            
+            patients.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.id;
+                option.textContent = patient.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Load histories
+        async function loadHistories() {
+            try {
+                const response = await fetch('http://localhost:5001/api/clinical-histories');
+                if (response.ok) {
+                    histories = await response.json();
+                    renderHistories(histories);
+                } else {
+                    renderEmptyState();
+                }
+            } catch (error) {
+                console.error('Error al cargar historias:', error);
+                renderEmptyState();
+            }
+        }
+
+        function renderHistories(historiesToRender) {
+            const container = document.getElementById('historiesContainer');
+            
+            if (historiesToRender.length === 0) {
+                renderEmptyState();
+                return;
+            }
+
+            container.innerHTML = historiesToRender.map(history => `
+                <div class="history-card">
+                    <div class="history-header">
+                        <div class="history-patient">
+                            <div class="patient-avatar">${getInitials(history.patient_name)}</div>
+                            <div class="patient-info">
+                                <h3>${history.patient_name}</h3>
+                                <p><i class="fas fa-tooth"></i> ${history.treatment_type}</p>
+                            </div>
+                        </div>
+                        <div class="history-date">
+                            <div class="date-label">Fecha de Consulta</div>
+                            <div class="date-value">${formatDate(history.consult_date)}</div>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <div class="content-row">
+                            <div class="content-item">
+                                <span class="content-label">Pieza Dental</span>
+                                <span class="content-value">${history.tooth_number || 'N/A'}</span>
+                            </div>
+                            <div class="content-item">
+                                <span class="content-label">Próxima Cita</span>
+                                <span class="content-value">${history.next_appointment ? formatDate(history.next_appointment) : 'No programada'}</span>
+                            </div>
+                        </div>
+                        <div class="content-row">
+                            <div class="content-item full-width">
+                                <span class="content-label">Motivo de Consulta</span>
+                                <span class="content-value">${history.reason_visit}</span>
+                            </div>
+                        </div>
+                        <div class="diagnosis-section">
+                            <h4><i class="fas fa-stethoscope"></i> Diagnóstico</h4>
+                            <p>${history.diagnosis}</p>
+                        </div>
+                        <div class="diagnosis-section">
+                            <h4><i class="fas fa-notes-medical"></i> Tratamiento</h4>
+                            <p>${history.treatment}</p>
+                        </div>
+                        ${history.observations ? `
+                        <div class="diagnosis-section">
+                            <h4><i class="fas fa-clipboard"></i> Observaciones</h4>
+                            <p>${history.observations}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="history-actions">
+                        <button class="btn btn-info btn-small" onclick="viewHistory(${history.id})">
+                            <i class="fas fa-eye"></i> Ver
+                        </button>
+                        <button class="btn btn-warning btn-small" onclick="editHistory(${history.id})">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="deleteHistory(${history.id})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEmptyState() {
+            const container = document.getElementById('historiesContainer');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-file-medical"></i>
+                    <h3>No hay historias clínicas</h3>
+                    <p>Comienza creando una nueva historia clínica para tus pacientes</p>
+                    <button class="btn btn-primary" onclick="showAddHistoryModal()">
+                        <i class="fas fa-plus"></i> Crear Primera Historia
+                    </button>
+                </div>
+            `;
+        }
+
+        // Helper functions
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', { 
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric' 
+            });
+        }
+
+        // Modal functions
+        function showAddHistoryModal() {
+            document.getElementById('historyModal').classList.add('show');
+            document.getElementById('historyForm').reset();
+            setDefaultDate();
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('show');
+        }
+
+        // Form submission
+        document.getElementById('historyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                patient_id: document.getElementById('patientSelect').value,
+                consult_date: document.getElementById('consultDate').value,
+                treatment_type: document.getElementById('treatmentType').value,
+                tooth_number: document.getElementById('toothNumber').value,
+                reason_visit: document.getElementById('reasonVisit').value,
+                diagnosis: document.getElementById('diagnosis').value,
+                treatment: document.getElementById('treatment').value,
+                observations: document.getElementById('observations').value,
+                next_appointment: document.getElementById('nextAppointment').value || null
+            };
+
+            try {
+                const response = await fetch('http://localhost:5001/api/clinical-histories', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('✅ Historia clínica guardada exitosamente');
+                    closeHistoryModal();
+                    loadHistories();
+                } else {
+                    alert('❌ Error al guardar historia clínica');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error de conexión');
+            }
+        });
+
+        // Filter histories
+        function filterHistories() {
+            const searchTerm = document.getElementById('searchPatient').value.toLowerCase();
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            const treatmentFilter = document.getElementById('treatmentFilter').value;
+
+            const filtered = histories.filter(history => {
+                const matchesSearch = history.patient_name.toLowerCase().includes(searchTerm);
+                const matchesDateFrom = !dateFrom || history.consult_date >= dateFrom;
+                const matchesDateTo = !dateTo || history.consult_date <= dateTo;
+                const matchesTreatment = !treatmentFilter || history.treatment_type === treatmentFilter;
+
+                return matchesSearch && matchesDateFrom && matchesDateTo && matchesTreatment;
+            });
+
+            renderHistories(filtered);
+        }
+
+        // CRUD operations
+        function viewHistory(id) {
+            const history = histories.find(h => h.id === id);
+            if (history) {
+                alert(`Ver historia clínica: ${history.patient_name}\n\nEsta funcionalidad se implementará próximamente.`);
+            }
+        }
+
+        function editHistory(id) {
+            const history = histories.find(h => h.id === id);
+            if (history) {
+                document.getElementById('patientSelect').value = history.patient_id;
+                document.getElementById('consultDate').value = history.consult_date;
+                document.getElementById('treatmentType').value = history.treatment_type;
+                document.getElementById('toothNumber').value = history.tooth_number || '';
+                document.getElementById('reasonVisit').value = history.reason_visit;
+                document.getElementById('diagnosis').value = history.diagnosis;
+                document.getElementById('treatment').value = history.treatment;
+                document.getElementById('observations').value = history.observations || '';
+                document.getElementById('nextAppointment').value = history.next_appointment || '';
+
+                showAddHistoryModal();
+            }
+        }
+
+        async function deleteHistory(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta historia clínica?')) {
+                try {
+                    const response = await fetch(`http://localhost:5001/api/clinical-histories/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('✅ Historia clínica eliminada');
+                        loadHistories();
+                    } else {
+                        alert('❌ Error al eliminar historia clínica');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('❌ Error de conexión');
+                }
+            }
+        }
+
+        // Navigation
+        function handleRoute(route) {
+            window.location.href = route;
+        }
+
+        // Close modal on outside click
+        document.getElementById('historyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeHistoryModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -265,15 +265,16 @@ def create_appointment():
     data = request.get_json()
     
     conn = get_db_connection()
-    conn.execute('''
+    cursor = conn.cursor()
+    cursor.execute('''
         INSERT INTO appointments (patient_id, date, time, type, status, notes)
         VALUES (?, ?, ?, ?, ?, ?)
     ''', (
         data['patient_id'], data['date'], data['time'], 
         data['type'], data.get('status', 'pending'), data.get('notes')
     ))
+    appointment_id = cursor.lastrowid
     conn.commit()
-    appointment_id = conn.lastrowid
     conn.close()
     
     return jsonify({'id': appointment_id, 'message': 'Cita creada exitosamente'}), 201

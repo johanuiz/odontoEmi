@@ -1,9 +1,1088 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL was not found on this server.</p>
-<p>Additionally, a 404 Not Found
-error was encountered while trying to use an ErrorDocument to handle the request.</p>
-</body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exámenes - OdontoEMI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Top Header */
+        .top-header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            color: #667eea;
+        }
+
+        .system-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            color: #4a5568;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #718096;
+        }
+
+        .logout-btn {
+            padding: 6px 12px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Navigation */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-menu li a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu li a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #667eea;
+        }
+
+        .header-actions-btn {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.blue { background: #dbeafe; color: #3b82f6; }
+        .stat-icon.green { background: #d1fae5; color: #10b981; }
+        .stat-icon.orange { background: #fed7aa; color: #f59e0b; }
+        .stat-icon.purple { background: #e9d5ff; color: #a855f7; }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        /* Exams Section */
+        .exams-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* Filters */
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* Exam Cards */
+        .exams-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .exam-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .exam-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f7fafc;
+        }
+
+        .exam-info h3 {
+            font-size: 18px;
+            color: #1a202c;
+            margin-bottom: 5px;
+        }
+
+        .exam-info p {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #fed7aa; color: #d97706; }
+        .badge-sent { background: #dbeafe; color: #2563eb; }
+        .badge-completed { background: #d1fae5; color: #059669; }
+        .badge-cancelled { background: #fee2e2; color: #dc2626; }
+
+        .exam-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .exam-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 2px solid #f7fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 2px solid #f7fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="logo-section">
+            <div class="logo">🦷</div>
+            <div class="system-title">OdontoEMI</div>
+        </div>
+        <div class="header-actions">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">Dr</div>
+                <div class="user-details">
+                    <div class="user-name">Dr. Odontólogo</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+                <button class="logout-btn" onclick="handleRoute('/index.html')">Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <ul class="nav-menu">
+            <li><a href="/index.html"><i class="fas fa-home"></i> Panel</a></li>
+            <li><a href="/panel-control/agenda_original"><i class="fas fa-calendar-alt"></i> Citas</a></li>
+            <li><a href="/panel-control/pacientes"><i class="fas fa-users"></i> Pacientes</a></li>
+            <li><a href="/panel-control/historias"><i class="fas fa-file-medical"></i> Historias</a></li>
+            <li><a href="/panel-control/facturacion"><i class="fas fa-file-invoice-dollar"></i> Facturación</a></li>
+            <li><a href="/panel-control/inventario"><i class="fas fa-boxes"></i> Inventario</a></li>
+            <li><a href="/panel-control/examenes" class="active"><i class="fas fa-flask"></i> Exámenes</a></li>
+            <li><a href="/panel-control/reportes"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-flask"></i>
+                Exámenes y Laboratorios
+            </h1>
+            <div class="header-actions-btn">
+                <button class="btn btn-primary" onclick="showAddExamModal()">
+                    <i class="fas fa-plus"></i> Solicitar Examen
+                </button>
+                <button class="btn btn-success" onclick="loadExams()">
+                    <i class="fas fa-sync"></i> Actualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-label">Total Exámenes</div>
+                        <div class="stat-value" id="totalExams">0</div>
+                    </div>
+                    <div class="stat-icon blue">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-label">Pendientes</div>
+                        <div class="stat-value" id="pendingExams">0</div>
+                    </div>
+                    <div class="stat-icon orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-label">Completados</div>
+                        <div class="stat-value" id="completedExams">0</div>
+                    </div>
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-label">Este Mes</div>
+                        <div class="stat-value" id="monthExams">0</div>
+                    </div>
+                    <div class="stat-icon purple">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exams Section -->
+        <div class="exams-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label>Buscar</label>
+                    <input type="text" id="searchExam" placeholder="Buscar por paciente..." onkeyup="filterExams()">
+                </div>
+                <div class="filter-group">
+                    <label>Estado</label>
+                    <select id="statusFilter" onchange="filterExams()">
+                        <option value="">Todos</option>
+                        <option value="pending">Pendiente</option>
+                        <option value="sent">Enviado</option>
+                        <option value="completed">Completado</option>
+                        <option value="cancelled">Cancelado</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Tipo de Examen</label>
+                    <select id="typeFilter" onchange="filterExams()">
+                        <option value="">Todos</option>
+                        <option value="radiografia">Radiografía</option>
+                        <option value="tomografia">Tomografía</option>
+                        <option value="biopsia">Biopsia</option>
+                        <option value="laboratorio">Laboratorio</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Fecha</label>
+                    <input type="date" id="dateFilter" onchange="filterExams()">
+                </div>
+            </div>
+
+            <div id="examsContainer" class="exams-grid">
+                <!-- Exams will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Exam Modal -->
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Solicitar Examen</h2>
+                <button class="close-btn" onclick="closeExamModal()">×</button>
+            </div>
+            <form id="examForm">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Paciente *</label>
+                            <select id="examPatient" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Examen *</label>
+                            <select id="examType" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="radiografia">Radiografía</option>
+                                <option value="tomografia">Tomografía</option>
+                                <option value="biopsia">Biopsia</option>
+                                <option value="laboratorio">Análisis de Laboratorio</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Laboratorio *</label>
+                            <input type="text" id="examLab" required placeholder="Nombre del laboratorio">
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Solicitud *</label>
+                            <input type="date" id="examDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha Estimada de Entrega</label>
+                            <input type="date" id="examDeliveryDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="examStatus">
+                                <option value="pending">Pendiente</option>
+                                <option value="sent">Enviado</option>
+                                <option value="completed">Completado</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Descripción del Examen *</label>
+                            <textarea id="examDescription" required placeholder="Describa el examen solicitado..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Observaciones</label>
+                            <textarea id="examNotes" placeholder="Observaciones adicionales..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeExamModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let exams = [];
+        let patients = [];
+
+        // Initialize
+        window.onload = function() {
+            loadPatients();
+            loadExams();
+            setDefaultDates();
+        };
+
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('examDate').value = today;
+            
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            document.getElementById('examDeliveryDate').value = nextWeek.toISOString().split('T')[0];
+        }
+
+        // Load data
+        async function loadPatients() {
+            try {
+                const response = await fetch('http://localhost:5001/api/patients');
+                if (response.ok) {
+                    patients = await response.json();
+                    populatePatientSelect();
+                }
+            } catch (error) {
+                console.error('Error al cargar pacientes:', error);
+            }
+        }
+
+        function populatePatientSelect() {
+            const select = document.getElementById('examPatient');
+            select.innerHTML = '<option value="">Seleccionar paciente...</option>';
+            
+            patients.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.id;
+                option.textContent = patient.name;
+                select.appendChild(option);
+            });
+        }
+
+        async function loadExams() {
+            try {
+                const response = await fetch('http://localhost:5001/api/exams');
+                if (response.ok) {
+                    exams = await response.json();
+                    renderExams(exams);
+                    updateStats();
+                } else {
+                    exams = [];
+                    renderEmptyState();
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('Error al cargar exámenes:', error);
+                exams = [];
+                renderEmptyState();
+                updateStats();
+            }
+        }
+
+        function renderExams(examsToRender) {
+            const container = document.getElementById('examsContainer');
+            
+            if (examsToRender.length === 0) {
+                renderEmptyState();
+                return;
+            }
+
+            container.innerHTML = examsToRender.map(exam => {
+                const statusText = {
+                    'pending': 'Pendiente',
+                    'sent': 'Enviado',
+                    'completed': 'Completado',
+                    'cancelled': 'Cancelado'
+                }[exam.status];
+
+                const statusClass = `badge-${exam.status}`;
+
+                return `
+                    <div class="exam-card">
+                        <div class="exam-header">
+                            <div class="exam-info">
+                                <h3>${exam.patient_name}</h3>
+                                <p><i class="fas fa-flask"></i> ${exam.exam_type}</p>
+                            </div>
+                            <span class="badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="exam-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Laboratorio</span>
+                                <span class="detail-value">${exam.laboratory}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fecha Solicitud</span>
+                                <span class="detail-value">${formatDate(exam.exam_date)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fecha Entrega</span>
+                                <span class="detail-value">${exam.delivery_date ? formatDate(exam.delivery_date) : 'No especificada'}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item" style="margin-bottom: 15px;">
+                            <span class="detail-label">Descripción</span>
+                            <span class="detail-value">${exam.description}</span>
+                        </div>
+                        ${exam.notes ? `
+                        <div class="detail-item" style="margin-bottom: 15px;">
+                            <span class="detail-label">Observaciones</span>
+                            <span class="detail-value">${exam.notes}</span>
+                        </div>
+                        ` : ''}
+                        <div class="exam-actions">
+                            <button class="btn btn-info btn-small" onclick="viewExam(${exam.id})">
+                                <i class="fas fa-eye"></i> Ver
+                            </button>
+                            <button class="btn btn-warning btn-small" onclick="editExam(${exam.id})">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteExam(${exam.id})">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderEmptyState() {
+            const container = document.getElementById('examsContainer');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px;">
+                    <i class="fas fa-flask" style="font-size: 64px; color: #cbd5e0; margin-bottom: 20px;"></i>
+                    <h3 style="color: #4a5568; margin-bottom: 10px;">No hay exámenes solicitados</h3>
+                    <p style="color: #718096; margin-bottom: 20px;">Comienza solicitando un nuevo examen</p>
+                    <button class="btn btn-primary" onclick="showAddExamModal()">
+                        <i class="fas fa-plus"></i> Solicitar Examen
+                    </button>
+                </div>
+            `;
+        }
+
+        function updateStats() {
+            const totalExams = exams.length;
+            const pendingExams = exams.filter(e => e.status === 'pending' || e.status === 'sent').length;
+            const completedExams = exams.filter(e => e.status === 'completed').length;
+            
+            const currentMonth = new Date().getMonth();
+            const monthExams = exams.filter(e => {
+                const examDate = new Date(e.exam_date);
+                return examDate.getMonth() === currentMonth;
+            }).length;
+
+            document.getElementById('totalExams').textContent = totalExams;
+            document.getElementById('pendingExams').textContent = pendingExams;
+            document.getElementById('completedExams').textContent = completedExams;
+            document.getElementById('monthExams').textContent = monthExams;
+        }
+
+        // Modal functions
+        function showAddExamModal() {
+            document.getElementById('examModal').classList.add('show');
+            document.getElementById('examForm').reset();
+            setDefaultDates();
+        }
+
+        function closeExamModal() {
+            document.getElementById('examModal').classList.remove('show');
+        }
+
+        // Form submission
+        document.getElementById('examForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                patient_id: document.getElementById('examPatient').value,
+                exam_type: document.getElementById('examType').value,
+                laboratory: document.getElementById('examLab').value,
+                exam_date: document.getElementById('examDate').value,
+                delivery_date: document.getElementById('examDeliveryDate').value || null,
+                status: document.getElementById('examStatus').value,
+                description: document.getElementById('examDescription').value,
+                notes: document.getElementById('examNotes').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:5001/api/exams', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('✅ Examen registrado exitosamente');
+                    closeExamModal();
+                    loadExams();
+                } else {
+                    alert('❌ Error al registrar examen');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error de conexión');
+            }
+        });
+
+        // Helper functions
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', { 
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric' 
+            });
+        }
+
+        function filterExams() {
+            const searchTerm = document.getElementById('searchExam').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            const filtered = exams.filter(exam => {
+                const matchesSearch = exam.patient_name.toLowerCase().includes(searchTerm);
+                const matchesStatus = !statusFilter || exam.status === statusFilter;
+                const matchesType = !typeFilter || exam.exam_type === typeFilter;
+                const matchesDate = !dateFilter || exam.exam_date === dateFilter;
+
+                return matchesSearch && matchesStatus && matchesType && matchesDate;
+            });
+
+            renderExams(filtered);
+        }
+
+        function viewExam(id) {
+            const exam = exams.find(e => e.id === id);
+            if (exam) {
+                alert(`Ver examen: ${exam.patient_name}\n\nEsta funcionalidad se implementará próximamente.`);
+            }
+        }
+
+        function editExam(id) {
+            const exam = exams.find(e => e.id === id);
+            if (exam) {
+                document.getElementById('examPatient').value = exam.patient_id;
+                document.getElementById('examType').value = exam.exam_type;
+                document.getElementById('examLab').value = exam.laboratory;
+                document.getElementById('examDate').value = exam.exam_date;
+                document.getElementById('examDeliveryDate').value = exam.delivery_date || '';
+                document.getElementById('examStatus').value = exam.status;
+                document.getElementById('examDescription').value = exam.description;
+                document.getElementById('examNotes').value = exam.notes || '';
+
+                showAddExamModal();
+            }
+        }
+
+        async function deleteExam(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este examen?')) {
+                try {
+                    const response = await fetch(`http://localhost:5001/api/exams/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('✅ Examen eliminado');
+                        loadExams();
+                    } else {
+                        alert('❌ Error al eliminar examen');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('❌ Error de conexión');
+                }
+            }
+        }
+
+        // Navigation
+        function handleRoute(route) {
+            window.location.href = route;
+        }
+
+        // Close modal on outside click
+        document.getElementById('examModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExamModal();
+            }
+        });
+    </script>
+</body>
+</html>

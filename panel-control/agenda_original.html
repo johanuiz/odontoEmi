@@ -304,64 +304,137 @@
             transform: translateY(-1px);
         }
 
-        /* Calendar Grid */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background: #e2e8f0;
+        /* Day Calendar */
+        .day-calendar {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .calendar-header {
-            background: #f1f5f9;
-            padding: 12px 8px;
-            text-align: center;
-            font-weight: 600;
-            color: #475569;
-            font-size: 14px;
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .calendar-day {
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
             background: white;
-            min-height: 120px;
-            padding: 8px;
-            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .current-date {
+            font-weight: 600;
+            color: #374151;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        /* Hour Grid */
+        .hour-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .hour-labels {
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .hour-label {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
             position: relative;
         }
 
-        .calendar-day:hover {
+        .hour-label:last-child {
+            border-bottom: none;
+        }
+
+        .hour-slots {
+            background: white;
+        }
+
+        .hour-slot {
+            height: 60px;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .hour-slot:hover {
             background: #f8fafc;
         }
 
-        .calendar-day.today {
-            background: #dbeafe;
-            border: 2px solid #3b82f6;
+        .hour-slot:last-child {
+            border-bottom: none;
         }
 
-        .calendar-day.other-month {
+        .hour-slot.past {
             background: #f9fafb;
             color: #9ca3af;
         }
 
-        .day-number {
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 14px;
+        .hour-slot.current {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
         }
 
+        /* Appointments */
         .appointment {
+            position: absolute;
+            left: 4px;
+            right: 4px;
             background: #3b82f6;
             color: white;
-            padding: 2px 6px;
             border-radius: 4px;
+            padding: 4px 8px;
             font-size: 11px;
-            margin-bottom: 2px;
+            font-weight: 500;
             cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .appointment:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .appointment.urgent {
@@ -375,6 +448,50 @@
         .appointment.pending {
             background: #f59e0b;
         }
+
+        .appointment.cancelled {
+            background: #6b7280;
+            text-decoration: line-through;
+        }
+
+        /* Appointment Actions */
+        .appointment-actions {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            z-index: 20;
+            min-width: 120px;
+            display: none;
+        }
+
+        .appointment-actions.show {
+            display: block;
+        }
+
+        .action-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s ease;
+        }
+
+        .action-item:last-child {
+            border-bottom: none;
+        }
+
+        .action-item:hover {
+            background: #f8fafc;
+        }
+
+        .action-item.new { color: #3b82f6; }
+        .action-item.edit { color: #f59e0b; }
+        .action-item.delete { color: #ef4444; }
+        .action-item.export { color: #10b981; }
 
         /* Stats */
         .stats-grid {
@@ -683,10 +800,16 @@
             </div>
         </div>
 
-        <!-- Agenda Calendar -->
-        <div class="agenda-container">
-            <div class="agenda-header">
-                <div class="agenda-title">Calendario de Citas</div>
+        <!-- Day Calendar -->
+        <div class="day-calendar">
+            <div class="calendar-header">
+                <div class="calendar-title">Calendario del Día</div>
+                <div class="calendar-nav">
+                    <button class="nav-btn" onclick="previousDay()">← Anterior</button>
+                    <div class="current-date" id="currentDateDisplay"></div>
+                    <button class="nav-btn" onclick="nextDay()">Siguiente →</button>
+                    <button class="nav-btn" onclick="goToToday()">Hoy</button>
+                </div>
                 <div class="agenda-controls">
                     <button class="btn btn-primary" onclick="showAddAppointmentModal()">
                         ➕ Nueva Cita
@@ -700,8 +823,13 @@
                 </div>
             </div>
             
-            <div id="calendarContainer">
-                <!-- Calendar will be generated here -->
+            <div class="hour-grid">
+                <div class="hour-labels" id="hourLabels">
+                    <!-- Hour labels will be generated here -->
+                </div>
+                <div class="hour-slots" id="hourSlots">
+                    <!-- Hour slots will be generated here -->
+                </div>
             </div>
         </div>
     </div>
@@ -761,61 +889,51 @@
         // Global variables
         let currentDate = new Date();
         let appointments = [];
+        let selectedAppointment = null;
 
         // Initialize calendar
         function initCalendar() {
-            generateCalendar(currentDate);
+            generateDayCalendar(currentDate);
             loadAppointments();
         }
 
-        // Generate calendar grid
-        function generateCalendar(date) {
-            const container = document.getElementById('calendarContainer');
-            const year = date.getFullYear();
-            const month = date.getMonth();
+        // Generate day calendar
+        function generateDayCalendar(date) {
+            const hourLabelsContainer = document.getElementById('hourLabels');
+            const hourSlotsContainer = document.getElementById('hourSlots');
             
-            // Create calendar header
-            let calendarHTML = `
-                <div class="calendar-header">Lun</div>
-                <div class="calendar-header">Mar</div>
-                <div class="calendar-header">Mié</div>
-                <div class="calendar-header">Jue</div>
-                <div class="calendar-header">Vie</div>
-                <div class="calendar-header">Sáb</div>
-                <div class="calendar-header">Dom</div>
-            `;
+            // Update date display
+            document.getElementById('currentDateDisplay').textContent = formatDateSpanish(date);
             
-            // Get first day of month and days in month
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startDay = (firstDay.getDay() + 6) % 7; // Monday = 0
+            // Generate hour labels (8 AM to 8 PM)
+            let hourLabelsHTML = '';
+            let hourSlotsHTML = '';
             
-            // Add empty cells for days before month starts
-            for (let i = 0; i < startDay; i++) {
-                calendarHTML += `<div class="calendar-day other-month"></div>`;
+            for (let hour = 8; hour <= 20; hour++) {
+                const timeString = `${hour.toString().padStart(2, '0')}:00`;
+                hourLabelsHTML += `<div class="hour-label">${timeString}</div>`;
+                
+                // Create hour slot
+                const hourSlot = document.createElement('div');
+                hourSlot.className = 'hour-slot';
+                hourSlot.dataset.hour = hour;
+                hourSlot.onclick = () => createAppointmentAtHour(hour);
+                
+                // Check if this is current hour
+                const now = new Date();
+                if (isSameDay(date, now) && hour === now.getHours()) {
+                    hourSlot.classList.add('current');
+                } else if (isSameDay(date, now) && hour < now.getHours()) {
+                    hourSlot.classList.add('past');
+                }
+                
+                hourSlotsContainer.appendChild(hourSlot);
             }
             
-            // Add days of month
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayDate = new Date(year, month, day);
-                const isToday = isSameDay(dayDate, new Date());
-                const dayAppointments = getAppointmentsForDay(dayDate);
-                
-                let dayHTML = `<div class="calendar-day ${isToday ? 'today' : ''}" onclick="selectDate('${formatDate(dayDate)}')">`;
-                dayHTML += `<div class="day-number">${day}</div>`;
-                
-                // Add appointments for this day
-                dayAppointments.forEach(appointment => {
-                    const statusClass = getAppointmentStatusClass(appointment.status);
-                    dayHTML += `<div class="appointment ${statusClass}" onclick="viewAppointment('${appointment.id}')">${appointment.time} - ${appointment.patient}</div>`;
-                });
-                
-                dayHTML += `</div>`;
-                calendarHTML += dayHTML;
-            }
+            hourLabelsContainer.innerHTML = hourLabelsHTML;
             
-            container.innerHTML = calendarHTML;
+            // Load appointments for this day
+            loadAppointmentsForDay(date);
         }
 
         // Helper functions
@@ -829,6 +947,16 @@
             return date.toISOString().split('T')[0];
         }
 
+        function formatDateSpanish(date) {
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            return date.toLocaleDateString('es-ES', options);
+        }
+
         function getAppointmentsForDay(date) {
             const dateStr = formatDate(date);
             return appointments.filter(apt => apt.date === dateStr);
@@ -839,7 +967,160 @@
                 case 'completed': return 'completed';
                 case 'pending': return 'pending';
                 case 'urgent': return 'urgent';
+                case 'cancelled': return 'cancelled';
                 default: return '';
+            }
+        }
+
+        // Navigation functions
+        function previousDay() {
+            currentDate.setDate(currentDate.getDate() - 1);
+            generateDayCalendar(currentDate);
+        }
+
+        function nextDay() {
+            currentDate.setDate(currentDate.getDate() + 1);
+            generateDayCalendar(currentDate);
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            generateDayCalendar(currentDate);
+        }
+
+        // Create appointment at specific hour
+        function createAppointmentAtHour(hour) {
+            const timeString = `${hour.toString().padStart(2, '0')}:00`;
+            document.getElementById('appointmentDate').value = formatDate(currentDate);
+            document.getElementById('appointmentTime').value = timeString;
+            showAddAppointmentModal();
+        }
+
+        // Load appointments for specific day
+        function loadAppointmentsForDay(date) {
+            const dateStr = formatDate(date);
+            const dayAppointments = appointments.filter(apt => apt.date === dateStr);
+            
+            // Clear existing appointments
+            document.querySelectorAll('.hour-slot').forEach(slot => {
+                slot.innerHTML = '';
+            });
+            
+            // Add appointments to their respective time slots
+            dayAppointments.forEach(appointment => {
+                const hour = parseInt(appointment.time.split(':')[0]);
+                const hourSlot = document.querySelector(`[data-hour="${hour}"]`);
+                
+                if (hourSlot) {
+                    const appointmentElement = document.createElement('div');
+                    appointmentElement.className = `appointment ${getAppointmentStatusClass(appointment.status)}`;
+                    appointmentElement.textContent = `${appointment.time} - ${appointment.patient_name}`;
+                    appointmentElement.onclick = (e) => {
+                        e.stopPropagation();
+                        showAppointmentActions(appointment, appointmentElement);
+                    };
+                    
+                    hourSlot.appendChild(appointmentElement);
+                }
+            });
+        }
+
+        // Show appointment actions menu
+        function showAppointmentActions(appointment, element) {
+            // Remove existing actions
+            document.querySelectorAll('.appointment-actions').forEach(actions => {
+                actions.remove();
+            });
+            
+            const actions = document.createElement('div');
+            actions.className = 'appointment-actions show';
+            actions.innerHTML = `
+                <div class="action-item new" onclick="createNewAppointment('${appointment.time}')">➕ Nueva Cita</div>
+                <div class="action-item edit" onclick="editAppointment(${appointment.id})">✏️ Editar</div>
+                <div class="action-item delete" onclick="deleteAppointment(${appointment.id})">🗑️ Eliminar</div>
+                <div class="action-item export" onclick="exportAppointment(${appointment.id})">📤 Exportar</div>
+            `;
+            
+            element.appendChild(actions);
+            selectedAppointment = appointment;
+            
+            // Close actions when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function closeActions(e) {
+                    if (!element.contains(e.target)) {
+                        actions.remove();
+                        document.removeEventListener('click', closeActions);
+                    }
+                });
+            }, 100);
+        }
+
+        // Create new appointment at same time
+        function createNewAppointment(time) {
+            document.getElementById('appointmentDate').value = formatDate(currentDate);
+            document.getElementById('appointmentTime').value = time;
+            showAddAppointmentModal();
+        }
+
+        // Edit appointment
+        function editAppointment(appointmentId) {
+            const appointment = appointments.find(apt => apt.id === appointmentId);
+            if (appointment) {
+                // Fill form with appointment data
+                document.getElementById('patientSelect').value = appointment.patient_id;
+                document.getElementById('appointmentDate').value = appointment.date;
+                document.getElementById('appointmentTime').value = appointment.time;
+                document.getElementById('appointmentType').value = appointment.type;
+                document.getElementById('appointmentNotes').value = appointment.notes || '';
+                
+                document.getElementById('appointmentModal').classList.add('show');
+                // TODO: Update form to handle edit mode
+            }
+        }
+
+        // Delete appointment
+        async function deleteAppointment(appointmentId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta cita?')) {
+                try {
+                    const response = await fetch(`http://localhost:5001/api/appointments/${appointmentId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        alert('✅ Cita eliminada exitosamente');
+                        loadAppointments();
+                        generateDayCalendar(currentDate);
+                    } else {
+                        alert('❌ Error al eliminar cita');
+                    }
+                } catch (error) {
+                    console.error('❌ Error:', error);
+                    alert('❌ Error de conexión');
+                }
+            }
+        }
+
+        // Export appointment
+        function exportAppointment(appointmentId) {
+            const appointment = appointments.find(apt => apt.id === appointmentId);
+            if (appointment) {
+                const data = {
+                    paciente: appointment.patient_name,
+                    fecha: appointment.date,
+                    hora: appointment.time,
+                    tipo: appointment.type,
+                    estado: appointment.status,
+                    observaciones: appointment.notes || ''
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cita-${appointment.id}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
             }
         }
 
@@ -854,62 +1135,123 @@
             document.getElementById('appointmentForm').reset();
         }
 
-        function loadPatients() {
-            // Simulate loading patients
-            const select = document.getElementById('patientSelect');
-            select.innerHTML = '<option value="">Seleccionar paciente...</option>';
-            
-            // Add sample patients
-            const samplePatients = [
-                { id: 1, name: 'María González' },
-                { id: 2, name: 'Carlos Rodríguez' },
-                { id: 3, name: 'Ana Martínez' },
-                { id: 4, name: 'Luis Pérez' }
-            ];
-            
-            samplePatients.forEach(patient => {
-                const option = document.createElement('option');
-                option.value = patient.id;
-                option.textContent = patient.name;
-                select.appendChild(option);
-            });
+        async function loadPatients() {
+            try {
+                const response = await fetch('http://localhost:5001/api/patients');
+                const select = document.getElementById('patientSelect');
+                select.innerHTML = '<option value="">Seleccionar paciente...</option>';
+                
+                if (response.ok) {
+                    const patients = await response.json();
+                    patients.forEach(patient => {
+                        const option = document.createElement('option');
+                        option.value = patient.id;
+                        option.textContent = patient.name;
+                        select.appendChild(option);
+                    });
+                } else {
+                    // Add sample patients if API is not available
+                    const samplePatients = [
+                        { id: 1, name: 'María González' },
+                        { id: 2, name: 'Carlos Rodríguez' },
+                        { id: 3, name: 'Ana Martínez' },
+                        { id: 4, name: 'Luis Pérez' }
+                    ];
+                    
+                    samplePatients.forEach(patient => {
+                        const option = document.createElement('option');
+                        option.value = patient.id;
+                        option.textContent = patient.name;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('❌ Error al cargar pacientes:', error);
+                // Add sample patients if connection fails
+                const select = document.getElementById('patientSelect');
+                select.innerHTML = '<option value="">Seleccionar paciente...</option>';
+                
+                const samplePatients = [
+                    { id: 1, name: 'María González' },
+                    { id: 2, name: 'Carlos Rodríguez' },
+                    { id: 3, name: 'Ana Martínez' },
+                    { id: 4, name: 'Luis Pérez' }
+                ];
+                
+                samplePatients.forEach(patient => {
+                    const option = document.createElement('option');
+                    option.value = patient.id;
+                    option.textContent = patient.name;
+                    select.appendChild(option);
+                });
+            }
         }
 
-        function loadAppointments() {
-            console.log('🔄 Cargando citas...');
-            // Simulate loading appointments
-            appointments = [
-                {
-                    id: 1,
-                    patient: 'María González',
-                    date: formatDate(new Date()),
-                    time: '09:00',
-                    type: 'consulta',
-                    status: 'pending',
-                    notes: 'Revisión general'
-                },
-                {
-                    id: 2,
-                    patient: 'Carlos Rodríguez',
-                    date: formatDate(new Date()),
-                    time: '10:30',
-                    type: 'limpieza',
-                    status: 'completed',
-                    notes: 'Limpieza dental'
-                },
-                {
-                    id: 3,
-                    patient: 'Ana Martínez',
-                    date: formatDate(new Date()),
-                    time: '14:00',
-                    type: 'urgencia',
-                    status: 'urgent',
-                    notes: 'Dolor de muela'
+        async function loadAppointments() {
+            try {
+                console.log('🔄 Cargando citas...');
+                const response = await fetch('http://localhost:5001/api/appointments');
+                
+                if (response.ok) {
+                    appointments = await response.json();
+                    updateStats();
+                    generateDayCalendar(currentDate);
+                } else {
+                    console.error('❌ Error al cargar citas');
+                    // Use sample data if API is not available
+                    appointments = [
+                        {
+                            id: 1,
+                            patient_id: 1,
+                            patient_name: 'María González',
+                            date: formatDate(new Date()),
+                            time: '09:00',
+                            type: 'consulta',
+                            status: 'pending',
+                            notes: 'Revisión general'
+                        },
+                        {
+                            id: 2,
+                            patient_id: 2,
+                            patient_name: 'Carlos Rodríguez',
+                            date: formatDate(new Date()),
+                            time: '10:30',
+                            type: 'limpieza',
+                            status: 'completed',
+                            notes: 'Limpieza dental'
+                        },
+                        {
+                            id: 3,
+                            patient_id: 3,
+                            patient_name: 'Ana Martínez',
+                            date: formatDate(new Date()),
+                            time: '14:00',
+                            type: 'urgencia',
+                            status: 'urgent',
+                            notes: 'Dolor de muela'
+                        }
+                    ];
+                    updateStats();
+                    generateDayCalendar(currentDate);
                 }
-            ];
-            
-            updateStats();
-            generateCalendar(currentDate);
+            } catch (error) {
+                console.error('❌ Error:', error);
+                // Use sample data if connection fails
+                appointments = [
+                    {
+                        id: 1,
+                        patient_id: 1,
+                        patient_name: 'María González',
+                        date: formatDate(new Date()),
+                        time: '09:00',
+                        type: 'consulta',
+                        status: 'pending',
+                        notes: 'Revisión general'
+                    }
+                ];
+                updateStats();
+                generateDayCalendar(currentDate);
+            }
         }
 
         function updateStats() {
@@ -935,22 +1277,38 @@
         }
 
         // Form submission
-        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = {
-                patient: document.getElementById('patientSelect').value,
+                patient_id: document.getElementById('patientSelect').value,
                 date: document.getElementById('appointmentDate').value,
                 time: document.getElementById('appointmentTime').value,
                 type: document.getElementById('appointmentType').value,
-                notes: document.getElementById('appointmentNotes').value
+                notes: document.getElementById('appointmentNotes').value,
+                status: 'pending'
             };
             
-            console.log('💾 Guardando cita:', formData);
-            alert('✅ Cita guardada correctamente');
-            
-            closeAppointmentModal();
-            loadAppointments();
+            try {
+                const response = await fetch('http://localhost:5001/api/appointments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    alert('✅ Cita guardada correctamente');
+                    closeAppointmentModal();
+                    loadAppointments();
+                } else {
+                    alert('❌ Error al guardar cita');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                alert('❌ Error de conexión');
+            }
         });
 
         // Navegación
